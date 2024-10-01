@@ -11,7 +11,8 @@ const char* password = "YOUR_PASSWORD";
 // FauxmoESP instance
 fauxmoESP fauxmo;
 
-void setup() {
+void setup() 
+{
   // Initialize the serial port
   Serial.begin(115200);
 
@@ -22,7 +23,8 @@ void setup() {
   // Connect to WiFi
   Serial.printf("Connecting to %s ", ssid);
   WiFi.begin(ssid, password);
-  while (WiFi.status() != WL_CONNECTED) {
+  while (WiFi.status() != WL_CONNECTED) 
+  {
     Serial.print(".");
     delay(1000);
   }
@@ -36,18 +38,23 @@ void setup() {
 
   fauxmo.addDevice("Kitchen lights"); // This is the name that Alexa will recognize
 
-  fauxmo.onSetState([](unsigned char device_id, const char * device_name, bool state, unsigned char value) {
+  fauxmo.onSetState([](unsigned char device_id, const char * device_name, bool state, unsigned char value) 
+  {
     Serial.printf("[MAIN] Device #%d (%s) state: %s\n", device_id, device_name, state ? "ON" : "OFF");
 
-    if (state) {
+    if (state) 
+    {
       digitalWrite(RELAY_PIN, LOW); // Turn the light on
-    } else {
+    }
+    else 
+    {
       digitalWrite(RELAY_PIN, HIGH); // Turn the light off
     }
   });
 }
 
-void loop() {
+void loop() 
+{
   fauxmo.handle(); // Let Fauxmo process Alexa requests
   delay(10);       // Adding a small delay improves stability
 }
